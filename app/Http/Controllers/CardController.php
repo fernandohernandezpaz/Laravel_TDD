@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Card;
+use App\Models\Cards;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -35,16 +35,21 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cards::create([
+            'title' => $request->input('title'),
+            'image' => $request->input('image'),
+            'description' => $request->input('description'),
+            'active' => $request->boolean('active'),
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Card  $card
+     * @param  \App\Models\Cards  $cards
      * @return \Illuminate\Http\Response
      */
-    public function show(Card $card)
+    public function show(Cards $cards)
     {
         //
     }
@@ -52,10 +57,10 @@ class CardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Card  $card
+     * @param  \App\Models\Cards  $cards
      * @return \Illuminate\Http\Response
      */
-    public function edit(Card $card)
+    public function edit(Cards $cards)
     {
         //
     }
@@ -64,10 +69,10 @@ class CardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Card  $card
+     * @param  \App\Models\Cards  $cards
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Card $card)
+    public function update(Request $request, Cards $cards)
     {
         //
     }
@@ -75,10 +80,10 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Card  $card
+     * @param  \App\Models\Cards  $cards
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Card $card)
+    public function destroy(Cards $cards)
     {
         //
     }

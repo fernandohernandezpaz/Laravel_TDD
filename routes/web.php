@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +12,6 @@ use App\Http\Controllers\CardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Route::resource('cards', CardController::class);
