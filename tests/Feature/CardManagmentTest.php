@@ -53,11 +53,12 @@ class CardManagmentTest extends TestCase
             'description' => 'title',
             'active' => true
         ]);
-        $response->assertOk();
+//        $response->assertOk();
         $this->assertCount(1, Cards::all());
 
         $card = Cards::first();
 
         $this->assertEquals($card->title, 'Card title');
+        $response->assertRedirect(route('cards.show', ['card' => $card->id]));
     }
 }

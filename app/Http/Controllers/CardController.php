@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cards;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -33,18 +34,20 @@ class CardController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $newCard = new Cards();
         $pathImage = $newCard->uploadImage($request->file('image'));
-        $newCard->create([
+        $newCard = $newCard->create([
             'title' => $request->input('title'),
             'image' => $pathImage,
             'description' => $request->input('description'),
             'active' => $request->boolean('active'),
         ]);
+
+        return redirect()->route('cards.show', ['card' => $newCard->id]);
     }
 
     /**
