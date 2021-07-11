@@ -13,7 +13,21 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 class CardManagmentTest extends TestCase
 {
     use WithoutMiddleware;
-    use RefreshDatabase;
+//    use RefreshDatabase;
+
+    /** @test * */
+    public function list_of_cards_can_be_retrieved()
+    {
+        $this->withExceptionHandling();
+        Cards::factory()->count(3)->make();
+        $response = $this->get('/cards');
+        $response->assertOk();
+
+        $cards = Cards::all();
+
+        $response->assertViewIs('cards.index');
+        $response->assertViewHas('cards', $cards);
+    }
 
     /** @test * */
     public function a_card_can_be_created()
