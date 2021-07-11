@@ -1,4 +1,11 @@
 vendor
 .idea
 .env
+
+#sqlite files
 database\database.sqlite
+homestead.sqlite
+
+# PHPUnit
+/.phpunit.cache
+.phpunit.result.cache

@@ -35,9 +35,11 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        Cards::create([
+        $newCard = new Cards();
+        $pathImage = $newCard->uploadImage($request->file('image'));
+        $newCard->create([
             'title' => $request->input('title'),
-            'image' => $request->input('image'),
+            'image' => $pathImage,
             'description' => $request->input('description'),
             'active' => $request->boolean('active'),
         ]);
