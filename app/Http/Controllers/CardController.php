@@ -16,7 +16,7 @@ class CardController extends Controller
     public function index(): View
     {
         $cards = Cards::all();
-        return view('cards.index',compact('cards'));
+        return view('cards.index', compact('cards'));
     }
 
     /**
@@ -32,7 +32,7 @@ class CardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,12 +50,12 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Cards $cards
-     * @return \Illuminate\Http\Response
+     * @param Cards $card
+     * @return View
      */
-    public function show(Cards $cards)
+    public function show(Cards $card): View
     {
-        //
+        return view('cards.show', compact('card'));
     }
 
     /**

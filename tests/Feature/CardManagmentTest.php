@@ -13,13 +13,13 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 class CardManagmentTest extends TestCase
 {
     use WithoutMiddleware;
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     /** @test * */
     public function list_of_cards_can_be_retrieved()
     {
-        $this->withExceptionHandling();
-        Cards::factory()->count(3)->make();
+        $this->withoutExceptionHandling();
+        Cards::factory(3)->make();
         $response = $this->get('/cards');
         $response->assertOk();
 
@@ -30,9 +30,22 @@ class CardManagmentTest extends TestCase
     }
 
     /** @test * */
+    public function a_card_can_be_retrieved()
+    {
+        $this->withoutExceptionHandling();
+        $card = Cards::factory()->create();
+        $response = $this->get(route('cards.show', ['card' => $card->id]));
+
+        $response->assertOk();
+
+        $response->assertViewIs('cards.show');
+        $response->assertViewHas('card');
+    }
+
+    /** @test * */
     public function a_card_can_be_created()
     {
-        $this->withExceptionHandling();
+        $this->withoutExceptionHandling();
         Storage::fake('cards');
         $response = $this->post('/cards', [
             'title' => 'Card title',

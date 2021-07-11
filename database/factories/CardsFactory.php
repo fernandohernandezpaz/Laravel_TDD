@@ -26,7 +26,7 @@ class CardsFactory extends Factory
             'title' => Str::random(),
             'description' => Str::random(255),
             'image' => $this->faker->image('public/storage/cards'),
-            'activo' => (bool)rand(0, 1)
+            'active' => (bool)rand(0, 1)
         ];
     }
 }
