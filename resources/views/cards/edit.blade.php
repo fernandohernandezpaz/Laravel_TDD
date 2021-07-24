@@ -9,11 +9,11 @@
 </head>
 <body>
 
-<form >
+<form action="{{route('cards.update', ['card'=>$card->id])}}" method="POST">
     @method('PUT')
     @csrf
     <h4>Detail of card to edit</h4>
-    <fieldset disabled>
+    <fieldset>
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" value="{{old('title', $card->title)}}">
         <br>
@@ -25,8 +25,8 @@
                checked
                 @endif>
         <label for="active">Active</label><br>
+        <button type="submit">Update</button>
     </fieldset>
-
 
 </form>
 </body>

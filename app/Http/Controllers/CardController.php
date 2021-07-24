@@ -64,24 +64,26 @@ class CardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Cards $cards
-     * @return \Illuminate\Http\Response
+     * @param Cards $card
+     * @return View
      */
-    public function edit(Cards $cards)
+    public function edit(Cards $card): View
     {
-        //
+        return view('cards.edit', compact('card'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Cards $cards
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Cards $card
+     * @return RedirectResponse
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, Cards $card): RedirectResponse
     {
-        //
+        $card->update($request->all());
+
+        return redirect()->route('cards.show', ['card' => $card->id]);
     }
 
     /**

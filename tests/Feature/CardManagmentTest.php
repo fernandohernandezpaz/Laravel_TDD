@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\Cards;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -20,7 +21,7 @@ class CardManagmentTest extends TestCase
     {
         $this->withoutExceptionHandling();
         Cards::factory(3)->make();
-        $response = $this->get('/cards');
+        $response = $this->get(route('cards.index'));
         $response->assertOk();
 
         $cards = Cards::all();
@@ -53,12 +54,32 @@ class CardManagmentTest extends TestCase
             'description' => 'title',
             'active' => true
         ]);
-//        $response->assertOk();
+
         $this->assertCount(1, Cards::all());
 
         $card = Cards::first();
 
         $this->assertEquals($card->title, 'Card title');
-        $response->assertRedirect(route('cards.show', ['card' => $card->id]));
+        $response->assertRedirect(route('cards.show', $card->id));
+    }
+
+    /** @test * */
+    public function a_card_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+        $card = Cards::factory()->create();
+
+        $title = Str::random(25);
+        $this->get(route('cards.edit', ['card' => $card->id]));
+        $response = $this->put(
+            route('cards.update', ['card' => $card->id]), [
+            'title' => $title,
+            'active' => false
+        ]);
+
+        $card = $card->fresh();
+
+        $this->assertEquals($card->title, $title);
+        $response->assertRedirect(route('cards.show', ['id' => $card->id]));
     }
 }
