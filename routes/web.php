@@ -18,7 +18,3 @@ use App\Http\Controllers\PostController;
 
 Route::resource('cards', CardController::class);
 Route::resource('posts', PostController::class);
-//Route::get('cards/{id}', [CardController::class, 'show'])
-//    ->name('cards.show');
-//Route::put('cards/{id}', [CardController::class, 'update'])
-//    ->name('cards.update');

@@ -4,14 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\Posts;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class PostManagmentTest extends TestCase
 {
-    use WithoutMiddleware;
     use RefreshDatabase;
 
     /** @test * */
@@ -67,21 +64,14 @@ class PostManagmentTest extends TestCase
         $post = Posts::factory()->create();
 
         $title = Str::random(25);
-        $this->get(route('posts.edit', ['post' => $post->id]));
-        $response = $this->call(
-            'put',
-            route('posts.update', ['post' => $post->id]),
-            [
-                'title' => $title
-            ]);
-//        $response = $this->put(
-//            route('posts.update', ['post' => $post->id]), [
-//            'title' => $title
-//        ]);
+        $response = $this->put(
+            route('posts.update', ['post' => $post->id]), [
+            'title' => $title
+        ]);
 
         $post = $post->fresh();
 
         $this->assertEquals($post->title, $title);
-        $response->assertRedirect(route('posts.show', ['id' => $post->id]));
+        $response->assertRedirect(route('posts.show', ['post' => $post->id]));
     }
 }

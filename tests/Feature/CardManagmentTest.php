@@ -3,17 +3,14 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\Cards;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class CardManagmentTest extends TestCase
 {
-    use WithoutMiddleware;
     use RefreshDatabase;
 
     /** @test * */
@@ -67,10 +64,9 @@ class CardManagmentTest extends TestCase
     public function a_card_can_be_updated()
     {
         $this->withoutExceptionHandling();
-        $card = Cards::factory()->create();
+        $card = Cards::factory()->create(['active'=>true]);
 
         $title = Str::random(25);
-        $this->get(route('cards.edit', ['card' => $card->id]));
         $response = $this->put(
             route('cards.update', ['card' => $card->id]), [
             'title' => $title,
@@ -78,8 +74,7 @@ class CardManagmentTest extends TestCase
         ]);
 
         $card = $card->fresh();
-
         $this->assertEquals($card->title, $title);
-        $response->assertRedirect(route('cards.show', ['id' => $card->id]));
+        $response->assertRedirect(route('cards.show', ['card' => $card->id]));
     }
 }
