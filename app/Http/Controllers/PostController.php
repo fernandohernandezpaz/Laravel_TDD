@@ -88,11 +88,13 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Posts $posts
-     * @return \Illuminate\Http\Response
+     * @param Posts $post
+     * @return RedirectResponse
      */
-    public function destroy(Posts $posts)
+    public function destroy(Posts $post):RedirectResponse
     {
-        //
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }

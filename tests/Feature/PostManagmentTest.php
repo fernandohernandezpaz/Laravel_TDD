@@ -74,4 +74,16 @@ class PostManagmentTest extends TestCase
         $this->assertEquals($post->title, $title);
         $response->assertRedirect(route('posts.show', ['post' => $post->id]));
     }
+
+    /** @test * */
+    public function a_post_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+        $post = Posts::factory()->create();
+
+        $response = $this->delete(route('posts.destroy', ['post' => $post->id]));
+
+
+        $response->assertRedirect(route('posts.index'));
+    }
 }
