@@ -89,11 +89,12 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Cards $cards
-     * @return \Illuminate\Http\Response
+     * @param Cards $card
+     * @return RedirectResponse
      */
-    public function destroy(Cards $cards)
+    public function destroy(Cards $card): RedirectResponse
     {
-        //
+        $card->delete();
+        return redirect()->route('cards.index');
     }
 }

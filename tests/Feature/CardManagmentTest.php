@@ -77,4 +77,17 @@ class CardManagmentTest extends TestCase
         $this->assertEquals($card->title, $title);
         $response->assertRedirect(route('cards.show', ['card' => $card->id]));
     }
+
+    /** @test * */
+    public function a_card_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+        $card = Cards::factory()->create();
+
+        $response = $this->delete(
+            route('cards.destroy', ['card' => $card->id]), [
+        ]);
+
+        $response->assertRedirect(route('cards.index'));
+    }
 }
