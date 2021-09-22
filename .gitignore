@@ -10,3 +10,7 @@ homestead.sqlite
 # PHPUnit
 /.phpunit.cache
 .phpunit.result.cache
+
+testdb
+
+postgres-data
