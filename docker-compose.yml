@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  database:
+    image: postgres
+    container_name: database
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: laravel_docker
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - dev
+  tdd-app:
+    container_name: tdd-app
+#    entrypoint: ./entrypoint.sh
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/laravel_docker
+      - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - database
+    networks:
+      - dev
+
+networks:
+  dev:
+    driver: bridge
